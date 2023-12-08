@@ -30,6 +30,8 @@ export const HomePage = () => {
         return cookieValue ? cookieValue.pop() : '';
     }
 
+    console.log(localStorage.getItem('nurseID'))
+
     return (
         <div className="container-fluid">
             <div className="row mb-4">
@@ -50,17 +52,17 @@ export const HomePage = () => {
                     <h3>Number of Patients Assigned to you: 3</h3>
                     <ul className="list-unstyled">
                         <li>
-                            <div className="container rounded bg-secondary mb-2" rounded>
+                            <div className="container rounded bg-secondary mb-2" rounded="true">
                                 John Doe
                             </div>
                         </li>
                         <li>
-                            <div className="container rounded bg-secondary mb-2" rounded>
+                            <div className="container rounded bg-secondary mb-2" rounded="true">
                                 Jack Doe
                             </div>
                         </li>
                         <li>
-                            <div className="container rounded bg-secondary mb-2" rounded>
+                            <div className="container rounded bg-secondary mb-2" rounded="true">
                                 Jane Doe
                             </div>
                         </li>

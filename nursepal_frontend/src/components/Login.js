@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {Alert, Button} from 'react-bootstrap'
 
 export const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showAlert, setShowAlert] = useState(false);
 
     const submit = async e => {
         e.preventDefault();
@@ -12,18 +14,25 @@ export const Login = () => {
             password: password
         };
 
-        // const {data} = await fetch('http://localhost:8000/nursepal/api/login', {
-        //     method: 'POST',
-        //     user,
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'X-CSRFToken': getCookie('csrftoken')
-        //     },
-        // });
+        const data = await fetch('http://localhost:8000/nursepal/api/login', {
+            method: 'POST',
+            user,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user)
+        });
 
-        localStorage.clear();
-        localStorage.setItem('loggedIn', true);
-        window.location.href = '/';
+        if(data.ok)
+        {
+            localStorage.clear();
+            localStorage.setItem('loggedIn', true);
+            window.location.href = '/';
+        }
+        else{
+            setShowAlert(true)
+        }
+
 
     }
 
@@ -31,6 +40,10 @@ export const Login = () => {
       <div className="container">
           <div className="row justify-content-center mt-5">
               <div className="col-md-6">
+                    <Alert variant="danger" show={showAlert} onClose={() => setShowAlert(false)} dismissible>
+                        <Alert.Heading>Login Failed!</Alert.Heading>
+                        <p>Your login credentials are incorrect. Please try again.</p>
+                    </Alert>
                   <div className="card">
                       <div className="card-body">
                           <h3 className="card-title text-center">Sign In</h3>

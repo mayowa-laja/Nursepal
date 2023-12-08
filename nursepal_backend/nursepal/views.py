@@ -15,12 +15,11 @@ def user_login(request):
     username = request.data.get('username')
     password = request.data.get('password')
 
-    user = User.objects.get(username=username)
-
     try:
         user = User.objects.get(username=username)
+        nurse = user.nurse
+        print(nurse.nurseID)
         if user.check_password(password):
-            print("Executed Queries:", connection.queries)
             return JsonResponse({'message': 'Login successful'}, status=200)
         else:
             return JsonResponse({'message': 'Login failed'}, status=401)
