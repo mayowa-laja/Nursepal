@@ -8,30 +8,6 @@ export const HomePage = () => {
         }
     }, []);
 
-    // const executeRequest = async () => {
-    //     const data = {"username": "user1", "password": "user1"}
-    //     const response = await fetch(`${API_URL}`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'X-CSRFToken': getCookie('csrftoken')
-    //         },
-    //         body: JSON.stringify(data)
-    //     });
-    //     const return_data = await response.json();
-
-    //     console.log(return_data);
-    // }
-
-    // executeRequest();
-
-    function getCookie(name) {
-        const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-        return cookieValue ? cookieValue.pop() : '';
-    }
-
-    console.log(localStorage.getItem('nurseID'))
-
     return (
         <div className="container-fluid">
             <div className="row mb-4">

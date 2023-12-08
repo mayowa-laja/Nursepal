@@ -1,11 +1,6 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-import json
-from django.db import connection
 
 # Create your views here.
 
@@ -18,7 +13,6 @@ def user_login(request):
     try:
         user = User.objects.get(username=username)
         nurse = user.nurse
-        print(nurse.nurseID)
         if user.check_password(password):
             return JsonResponse({'message': 'Login successful'}, status=200)
         else:
