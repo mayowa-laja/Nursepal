@@ -20,7 +20,7 @@ class Patient(models.Model):
     address = models.TextField()
     sex = models.CharField(max_length=10)
     bloodType = models.CharField(max_length=5)
-    nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
+    nurse = models.ForeignKey(Nurse, on_delete=models.SET_NULL, null=True)
 
 
 class Admission(models.Model):
@@ -28,7 +28,7 @@ class Admission(models.Model):
     admissionReason = models.TextField()
     patient = models.OneToOneField(Patient, on_delete=models.CASCADE)
     admissionDateTime = models.DateTimeField()
-    dischargeDateTime = models.DateTimeField()
+    dischargeDateTime = models.DateTimeField(null=True)
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
 
     class Meta:

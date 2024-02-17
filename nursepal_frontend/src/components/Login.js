@@ -14,19 +14,20 @@ export const Login = () => {
             password: password
         };
 
-        const data = await fetch('http://localhost:8000/nursepal/api/login', {
+        const response = await fetch('http://localhost:8000/nursepal/api/login', {
             method: 'POST',
-            user,
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user)
         });
 
-        if(data.ok)
+        if(response.ok)
         {
+            const data = await response.json();
             localStorage.clear();
             localStorage.setItem('loggedIn', true);
+            localStorage.setItem('nurseID', data.nurseID)
             window.location.href = '/';
         }
         else{

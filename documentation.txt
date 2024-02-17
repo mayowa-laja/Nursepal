@@ -1,0 +1,10 @@
+Required for the running of the application:
+Python environment with the following packages: django, django-cors-headers, djangorestframework, psycopg2, proj
+Node.js - running react app
+kartoza/postgis image running on a docker container
+React packages: bootstrap, react-bootstrap, react-router-dom
+
+Instructions for running the application:
+1. Start the database container on docker
+2. Start the Django development server
+3. Start the React app

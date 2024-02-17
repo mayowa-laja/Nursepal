@@ -1,0 +1,34 @@
+*.pyc
+db.sqlite3
+db.sqlite3-journal
+.DS_Store
+.env
+**/settings/local.py
+/staticfiles/*
+/mediafiles/*
+__pycache__/
+/.vscode/
+
+# pycharm
+.idea/
+
+# npm
+node_modules/
+npm-debug.log
+
+# Webpack
+/frontend/bundles/*
+/frontend/webpack_bundles/*
+/webpack-stats.json
+
+# General
+/{{project_name}}-venv/
+/venv/
+/env/
+/output/
+/cache/
+boilerplate.zip
+
+.direnv
+.envrc
+.tool-versions

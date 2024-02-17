@@ -70,12 +70,6 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000'
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',
-#     ),
-# }
-
 ROOT_URLCONF = 'nursepal_backend.urls'
 
 TEMPLATES = [
