@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { loginUser } from "./api";
 import {Alert, Button} from 'react-bootstrap'
 
 export const Login = () => {
@@ -9,31 +10,17 @@ export const Login = () => {
     const submit = async e => {
         e.preventDefault();
 
-        const user = {
-            username: username,
-            password: password
-        };
-
-        const response = await fetch('http://localhost:8000/nursepal/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user)
-        });
-
-        if(response.ok)
-        {
-            const data = await response.json();
+        try{
+            const data = await loginUser(username, password);
             localStorage.clear();
             localStorage.setItem('loggedIn', true);
             localStorage.setItem('nurseID', data.nurseID)
             window.location.href = '/';
-        }
-        else{
-            setShowAlert(true)
-        }
 
+        } catch (error) {
+            console.error('Error logging in:', error);
+            setShowAlert(true);
+        }
 
     }
 

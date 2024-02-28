@@ -39,10 +39,11 @@ class Vitals(models.Model):
     vitalID = models.AutoField(primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     dateTime = models.DateTimeField()
-    temperature = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    heartRate = models.IntegerField(null=True)
-    bloodPressure = models.CharField(max_length=15, null=True)
-    respiratoryRate = models.IntegerField(null=True)
+    temperature = models.DecimalField(max_digits=5, decimal_places=2)
+    heartRate = models.IntegerField()
+    systolicBloodPressure = models.IntegerField()
+    diastolicBloodPressure = models.IntegerField()
+    respiratoryRate = models.IntegerField()
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
 
     class Meta:
@@ -54,6 +55,7 @@ class Medication(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     startDate = models.DateField()
     endDate = models.DateField()
+    quantity = models.IntegerField()
     frequency = models.CharField(max_length=255)
     medication = models.CharField(max_length=255)
     prescriber = models.CharField(max_length=255)
@@ -122,3 +124,15 @@ class LogViewing(models.Model):
 
     class Meta:
         unique_together = ('nurse', 'dateTime')
+
+
+class CarePlanChecklistItem(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    checked = models.BooleanField(default=False)
+
+
+class PredefinedChecklistItem(models.Model):
+    name = models.CharField(max_length=255)
+    group = models.CharField(max_length=255)
+

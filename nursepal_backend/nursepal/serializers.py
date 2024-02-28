@@ -65,3 +65,9 @@ class LogViewingSerializer(serializers.ModelSerializer):
     class Meta:
         model = LogViewing
         fields = '__all__'
+
+
+class CarePlanChecklistItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarePlanChecklistItem
+        fields = '__all__'

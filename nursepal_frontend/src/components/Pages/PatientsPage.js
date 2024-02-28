@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
+import { getPatients } from "../api";
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 export const PatientsPage = () => {
     const [patients, setPatients] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (localStorage.getItem('loggedIn') === null){
             window.location.href = '/login';
         }
-        getPatients();
+        getPatients(localStorage.getItem('nurseID'))
+            .then(data => {
+                setPatients(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching patients:', error);
+                setLoading(false);
+            });
     }, []);
-
-    const getPatients = async () => {
-        const nurseID = localStorage.getItem('nurseID');
-        const response = await fetch(`http://localhost:8000/nursepal/api/patients/${nurseID}`);
-        const data = await response.json();
-
-        setPatients(data);
-    }
 
     return (
         <div className="container-fluid">
@@ -27,26 +31,36 @@ export const PatientsPage = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6879">
                     <h3>Patients:</h3>
-                    <ul className="list-unstyled">
-                        {patients?.length > 0
-                            ? ( 
-                                patients.map((patient) => (
+                    {loading ? (
+                        <div className="d-flex align-items-center">
+                            <FontAwesomeIcon icon={faSpinner} spin size="lg" />
+                            <span className="ms-2">Loading...</span>
+                        </div>
+                    ): (
+                        <ul className="list-unstyled">
+                            {patients?.length > 0
+                                ? ( 
+                                    patients.map((patient) => (
+                                        <li key={patient.patientID}>
+                                            <Link to="/patient"
+                                                state={patient}>
+                                                <div className="container-fluid rounded bg-success text-white border">
+                                                {patient.name}
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    ))           
+                                ) : (
                                     <li>
-                                        <div className="container-fluid rounded bg-success text-white border" rounded>
-                                        {patient.name}
+                                        <div className="container-fluid rounded bg-success text-white border">
+                                            No patients found
                                         </div>
                                     </li>
-                                ))           
-                            ) : (
-                                <li>
-                                    <div className="container-fluid rounded bg-success text-white border" rounded>
-                                        No patients found
-                                    </div>
-                                </li>
-                        )}
-                    </ul>
+                            )}
+                        </ul>
+                    )}
                 </div>
             </div>
             <div className="row">
