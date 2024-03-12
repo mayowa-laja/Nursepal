@@ -1,0 +1,21 @@
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Add space between the list and the pagination */
+  }
+  
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .pagination li {
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .pagination li.active {
+    font-weight: bold;
+  }
+  

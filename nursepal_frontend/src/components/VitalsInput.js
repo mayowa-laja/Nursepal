@@ -62,7 +62,7 @@ export const VitalsInput = ({patient}) => {
             <button className="btn btn-secondary" onClick={toggleForm}>{isExpanded ? 'Collapse Vitals Form' : 'Input Vitals'}</button>
 
             {isExpanded && (
-                <form onSubmit={handleSubmit}>
+                <form className="mt-4" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="temperature" className="form-label">Temperature</label>
                         <input type="number" id="temperature" name="temperature" className="form-control" value={formData.temperature} onChange={handleInputChange} />

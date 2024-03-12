@@ -5,6 +5,7 @@ export const PatientInput = ({ patient }) => {
     const [formData, setFormData] = useState({
         type: '',
         description: '',
+        commonSymptom: '',
     });
 
     const [errorMessage, setErrorMessage] = useState('');
@@ -30,6 +31,7 @@ export const PatientInput = ({ patient }) => {
             setFormData({
                 type: '',
                 description: '',
+                commonSymptom: '',
             });
 
             setTimeout(() => {
@@ -59,9 +61,20 @@ export const PatientInput = ({ patient }) => {
                     </select>
                 </div>
 
+                {formData.type === 'symptom' && (
+                    <div className="mb-3">
+                        <label htmlFor="commonSymptom" className="form-label">Common Symptoms</label>
+                        <select id="commonSymptom" name="commonSymptom" className="form-select" value={formData.commonSymptom} onChange={handleInputChange}>
+                            <option value="">Select a symptom</option>
+                            <option value="headache">Headache</option>
+                            <option value="stomach ache">Stomach ache</option>
+                        </select>
+                    </div>
+                )}
+
                 <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea id="description" name="description" className="form-control" value={formData.description} onChange={handleInputChange}></textarea>
+                    <textarea id="description" name="description" className="form-control" value={formData.description} onChange={handleInputChange} disabled={formData.commonSymptom !== ''}></textarea>
                 </div>
 
                 {errorMessage && (

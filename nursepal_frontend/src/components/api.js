@@ -16,9 +16,20 @@ export const loginUser = async (username, password) => {
     }
 }
 
-export const getPatients = async (nurseID) => {
+export const getAssignedPatients = async (nurseID) => {
     try{
         const response = await axios.get(`${baseURL}/patients/${nurseID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching patients:', error);
+        throw error;
+    }
+}
+
+export const getAllPatients = async (nurseID) => {
+    try{
+        const response = await axios.get(`${baseURL}/patients`);
         return response.data;
     } 
     catch (error) {
@@ -89,6 +100,7 @@ export const recordNurseInput = async (nurseID, patientID, formData) => {
             nurseInput: {
                 type: formData.type,
                 description: formData.description,
+                commonSymptom: formData.commonSymptom,
             },
             patientID: patientID,
         }
@@ -122,6 +134,105 @@ export const updateChecklistItem = async (patientID, itemID) => {
         return response.data
     } catch (error) {
         console.error('Error updating checklist item:', error);
+        throw error;
+    }
+}
+
+export const getSymptoms = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/symptoms/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching symptoms:', error);
+        throw error;
+    }
+}
+
+export const getObservations = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/observations/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching observations:', error);
+        throw error;
+    }
+}
+
+export const getCare = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/care/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching care:', error);
+        throw error;
+    }
+}
+
+export const getMedications = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/medications/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching medication:', error);
+        throw error;
+    }
+}
+
+export const getAssignedPatientMedication = async (nurseID) => {
+    try{
+        const response = await axios.get(`${baseURL}/assigned_patient_medications/${nurseID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching medication:', error);
+        throw error;
+    }
+}
+
+export const getLastMedicineAdministration = async (nurseID) => {
+    try{
+        const response = await axios.get(`${baseURL}/last_med_admin/${nurseID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching medication:', error);
+        throw error;
+    }
+}
+
+export const getAllMedicineAdministration = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/patient_med_admin/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error fetching medication:', error);
+        throw error;
+    }
+}
+
+export const administerMedication = async (nurseID, data) => {
+    try{
+        const response = await axios.post(`${baseURL}/admin_med/${nurseID}`, data);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error recording administration of medicine:', error);
+        throw error;
+    }
+}
+
+export const log_patient_viewing = async (nurseID, data) => {
+    try{
+        const response = await axios.post(`${baseURL}/log/${nurseID}`, data);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error creating log of patient record viewing:', error);
         throw error;
     }
 }

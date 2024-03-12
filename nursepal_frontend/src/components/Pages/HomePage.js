@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import { getPatients } from "../api";
+import { getAssignedPatients } from "../api";
 import { Link } from 'react-router-dom';
 import { CareChecklist } from "../CareChecklist";
+import { MedicineDue } from "../MedicineDue";
 import '../../css/HomePage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -14,7 +15,7 @@ export const HomePage = () => {
         if (localStorage.getItem('loggedIn') === null){
             window.location.href = '/login';
         }
-        getPatients(localStorage.getItem('nurseID'))
+        getAssignedPatients(localStorage.getItem('nurseID'))
             .then(data => {
                 setPatients(data);
                 setLoading(false);
@@ -35,11 +36,7 @@ export const HomePage = () => {
             <div className="row">
                 <div className="col">
                     <h3>Medicine</h3>
-                    <ul>
-                        <li>Paracetamol</li>
-                        <li>Ibruprofen</li>
-                        <li>Panadol</li>
-                    </ul>
+                    <MedicineDue patients={patients}/>
                 </div>
                 <div className="col">
                     <h3>Number of Patients Assigned to you: 3</h3>
@@ -73,7 +70,7 @@ export const HomePage = () => {
                     )}
                 </div>
             </div>
-            <div className="row">
+            <div className="row text-center mt-3">
                 <CareChecklist patients={patients} />
             </div>
         </div>

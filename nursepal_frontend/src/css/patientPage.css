@@ -1,0 +1,11 @@
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+  
+.legend-square {
+    width: 15px; /* Adjust the size as needed */
+    height: 15px; /* Adjust the size as needed */
+    margin-right: 8px; /* Adjust the spacing between the square and the text */
+}
+  

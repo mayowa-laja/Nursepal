@@ -28,10 +28,13 @@ export const CareChecklist = ({patients}) => {
         }
     }
 
+    const uncheckedItems = items.filter(item => !item.checked);
+    const checkedItems = items.filter(item => item.checked);
+
     return (
         <div>
             <label>Select Patient:</label>
-            <select value={selectedPatient} onChange={handlePatientChange}>
+            <select value={selectedPatient || ''} onChange={handlePatientChange}>
                 <option value="">Select...</option>
                 {patients.map(patient => (
                 <option key={patient.patientID} value={patient.patientID}>{patient.name}</option>
@@ -40,7 +43,7 @@ export const CareChecklist = ({patients}) => {
 
             {selectedPatient && (
                 <div>
-                    {items.map(item => (
+                    {uncheckedItems.map(item => (
                         <div key={item.id}>
                         <input
                             type="checkbox"
@@ -48,6 +51,13 @@ export const CareChecklist = ({patients}) => {
                             onChange={() => handleToggle(item.id)}
                         />
                         <label>{item.name}</label>
+                        </div>
+                    ))}
+
+                    {checkedItems.map(item => (
+                        <div key={item.id}>
+                            <span>✅</span>
+                            <span>{item.name}</span>
                         </div>
                     ))}
                 </div>

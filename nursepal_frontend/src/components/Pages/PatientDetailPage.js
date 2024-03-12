@@ -1,14 +1,28 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import moment from 'moment';
+import { useLocation, Link } from 'react-router-dom';
 import image from '../../Images/johnDoe.png';
 import '../../css/patientDetailPage.css';
 import { VitalsInput } from '../VitalsInput';
 import { PatientInput } from '../PatientInput';
-import { VitalsCharts } from './VitalCharts';
+import { log_patient_viewing } from '../api';
 
 export const PatientDetailPage = () => {
     const patient = useLocation().state;
-    console.log(patient);
+
+    useEffect(() => {
+      const createLog = async () => {
+          try {
+              const data = {
+                patientID: patient.patientID
+              };
+              await log_patient_viewing(localStorage.getItem('nurseID'), data);
+          } catch (error) {
+              console.error('Error creating log:', error);
+          }
+      };
+      createLog();
+  }, [patient]);
 
     return (
         <div className="container-fluid">
@@ -19,8 +33,15 @@ export const PatientDetailPage = () => {
             </div>
 
             <div className="row">
-              <div className="col-md-3 m-3">
+              <div className="col-sm-3 m-3">
                 <img src={image} alt="Picture of patient"/>
+              </div>
+
+              <div className="col-sm-6" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
+                <Link to="/health"
+                  state={patient}>
+                  <button className="btn btn-secondary">Patient Health</button>
+                </Link>
               </div>
             </div>
 
@@ -32,7 +53,7 @@ export const PatientDetailPage = () => {
                 Age: {patient.age}
               </div>
               <div className="col-6 col-md-3 mb-5">
-                Date Of Birth: {patient.dateOfBirth}
+                Date Of Birth: {moment(patient.dateOfBirth).format('DD/MM/YYYY')}
               </div>
               <div className="col-6 col-md-3 mb-5">
                 Address: {patient.address}
@@ -46,15 +67,13 @@ export const PatientDetailPage = () => {
             </div>
             
             <div className="row">
-              <VitalsInput patient={patient} />
-            </div>
+              <div className="col-md-6 mt-4">
+                <VitalsInput patient={patient} />
+              </div>
 
-            <div className="row">
-              <PatientInput patient={patient} />
-            </div>
-            
-            <div className="row">
-              <VitalsCharts patient={patient} />
+              <div className="col-md-6">
+                <PatientInput patient={patient} />
+              </div>
             </div>
         </div>
     );

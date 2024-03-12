@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { getPatients } from "../api";
+import { getAllPatients } from "../api";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { AdmissionForm } from "../AdmissionForm";
+import '../../css/patientPage.css'
 
 export const PatientsPage = () => {
     const [patients, setPatients] = useState([]);
@@ -12,16 +14,27 @@ export const PatientsPage = () => {
         if (localStorage.getItem('loggedIn') === null){
             window.location.href = '/login';
         }
-        getPatients(localStorage.getItem('nurseID'))
+        getAllPatients(localStorage.getItem('nurseID'))
             .then(data => {
                 setPatients(data);
                 setLoading(false);
+                console.log(patients)
             })
             .catch(error => {
                 console.error('Error fetching patients:', error);
                 setLoading(false);
             });
     }, []);
+
+    const handleAdmissionSuccess = () => {
+        getAllPatients(localStorage.getItem('nurseID'))
+            .then(data => {
+                setPatients(data);
+            })
+            .catch(error => {
+                console.error('Error re-fetching patients:', error);
+            });
+    };
 
     return (
         <div className="container-fluid">
@@ -31,8 +44,16 @@ export const PatientsPage = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-6879">
+                <div className="col-md-6">
                     <h3>Patients:</h3>
+                    <div className="legend-item me-2">
+                        <div className="legend-square bg-success"></div>
+                        <span>Patients assigned to you</span>
+                    </div>
+                    <div className="legend-item">
+                        <div className="legend-square bg-secondary"></div>
+                        <span>Other patients</span>
+                    </div>
                     {loading ? (
                         <div className="d-flex align-items-center">
                             <FontAwesomeIcon icon={faSpinner} spin size="lg" />
@@ -46,8 +67,8 @@ export const PatientsPage = () => {
                                         <li key={patient.patientID}>
                                             <Link to="/patient"
                                                 state={patient}>
-                                                <div className="container-fluid rounded bg-success text-white border">
-                                                {patient.name}
+                                                <div className={`container-fluid rounded text-white border ${localStorage.getItem('nurseID') == patient.nurse ? 'bg-success' : 'bg-secondary'}`}>
+                                                    {patient.name}
                                                 </div>
                                             </Link>
                                         </li>
@@ -62,11 +83,9 @@ export const PatientsPage = () => {
                         </ul>
                     )}
                 </div>
-            </div>
-            <div className="row">
-                <Link to="/admission">
-                    <button className="btn btn-primary">Admit a Patient</button>
-                </Link>
+                <div className="col-md-6 text-center">
+                    <AdmissionForm handleAdmissionSuccess={handleAdmissionSuccess}/>
+                </div>
             </div>
         </div>
     );

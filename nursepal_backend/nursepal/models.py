@@ -56,7 +56,7 @@ class Medication(models.Model):
     startDate = models.DateField()
     endDate = models.DateField()
     quantity = models.IntegerField()
-    frequency = models.CharField(max_length=255)
+    frequency_hours = models.IntegerField()
     medication = models.CharField(max_length=255)
     prescriber = models.CharField(max_length=255)
 
@@ -79,7 +79,7 @@ class Symptoms(models.Model):
     symptomID = models.AutoField(primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     dateTime = models.DateTimeField()
-    symptomDescripton = models.CharField(max_length=255)
+    symptomDescription = models.CharField(max_length=255)
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
 
     class Meta:
@@ -126,13 +126,13 @@ class LogViewing(models.Model):
         unique_together = ('nurse', 'dateTime')
 
 
-class CarePlanChecklistItem(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    checked = models.BooleanField(default=False)
-
-
 class PredefinedChecklistItem(models.Model):
     name = models.CharField(max_length=255)
     group = models.CharField(max_length=255)
+
+
+class CarePlanChecklistItem(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    predefined_item = models.ForeignKey(PredefinedChecklistItem, on_delete=models.CASCADE, null=True)
+    checked = models.BooleanField(default=False)
 

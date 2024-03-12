@@ -4,7 +4,7 @@ import './App.css';
 import {HomePage} from './components/Pages/HomePage';
 import {PatientsPage} from './components/Pages/PatientsPage';
 import { PatientDetailPage } from './components/Pages/PatientDetailPage';
-import { AdmissionPage } from './components/Pages/AdmissionPage';
+import { PatientHealthPage } from './components/Pages/PatientHealthPage';
 import {Login} from './components/Login';
 import {Logout} from './components/Logout';
 import {Navigation} from './components/Navigations';
@@ -17,9 +17,9 @@ function App() {
         <Route path='/' element={<HomePage/>} />
         <Route path='/patients' element={<PatientsPage/>} />
         <Route path='/patient' element={<PatientDetailPage/>} />
+        <Route path='/health' element={<PatientHealthPage/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/logout' element={<Logout/>} />
-        <Route path='/admission' element={<AdmissionPage/>} />
       </Routes>
     </Router>
   );
