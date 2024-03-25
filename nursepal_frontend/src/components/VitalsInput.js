@@ -58,7 +58,7 @@ export const VitalsInput = ({patient}) => {
     };
 
     return (
-        <div className="container-fluid">
+        <>
             <button className="btn btn-secondary" onClick={toggleForm}>{isExpanded ? 'Collapse Vitals Form' : 'Input Vitals'}</button>
 
             {isExpanded && (
@@ -101,6 +101,6 @@ export const VitalsInput = ({patient}) => {
                     {successMessage}
                 </div>
             )}
-        </div>
+        </>
     );
 }

@@ -8,4 +8,11 @@
     height: 15px; /* Adjust the size as needed */
     margin-right: 8px; /* Adjust the spacing between the square and the text */
 }
+
+.assignedPatientLegend {
+    background-color: #4CAF50;
+}
   
+.otherPatientLegend {
+    background-color: #BDDEBD;
+}

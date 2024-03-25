@@ -5,8 +5,7 @@ export const CareChecklist = ({patients}) => {
     const [selectedPatient, setSelectedPatient] = useState(null);
     const [items, setItems] = useState([]);
 
-    const handlePatientChange = async (e) => {
-        const patientID = e.target.value;
+    const handlePatientChange = async (patientID) => {
         setSelectedPatient(patientID);
         console.log(patients);
         
@@ -32,36 +31,48 @@ export const CareChecklist = ({patients}) => {
     const checkedItems = items.filter(item => item.checked);
 
     return (
-        <div>
-            <label>Select Patient:</label>
-            <select value={selectedPatient || ''} onChange={handlePatientChange}>
-                <option value="">Select...</option>
-                {patients.map(patient => (
-                <option key={patient.patientID} value={patient.patientID}>{patient.name}</option>
-                ))}
-            </select>
-
-            {selectedPatient && (
-                <div>
-                    {uncheckedItems.map(item => (
-                        <div key={item.id}>
-                        <input
-                            type="checkbox"
-                            checked={item.checked}
-                            onChange={() => handleToggle(item.id)}
-                        />
-                        <label>{item.name}</label>
-                        </div>
+        <>
+            <div className="btn-group dropup">
+                <button className="btn btn-secondary dropdown-toggle dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Select Patient
+                </button>
+                <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#">Select...</a></li>
+                    {patients.map(patient => (
+                        <li key={patient.patientID}>
+                            <button className="dropdown-item" onClick={() => handlePatientChange(patient.patientID)}>
+                                {patient.name}
+                            </button>
+                        </li>
                     ))}
+                </ul>
+            </div>
 
-                    {checkedItems.map(item => (
-                        <div key={item.id}>
-                            <span>✅</span>
-                            <span>{item.name}</span>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
+
+            <div className="text-start">
+                {selectedPatient && (
+                    <ul className="list-group">
+                        {uncheckedItems.map(item => (
+                            <li className="care-checklist-item list-group-item" key={item.id}>
+                                <input
+                                    className="form-check-input me-1"
+                                    type="checkbox"
+                                    checked={item.checked}
+                                    onChange={() => handleToggle(item.id)}
+                                />
+                                <label className="form-check-label">{item.name}</label>
+                            </li>
+                        ))}
+
+                        {checkedItems.map(item => (
+                            <li className="care-checklist-item list-group-item" key={item.id}>
+                                <span>✅</span>
+                                <span>{item.name}</span>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+        </>
     );
 }

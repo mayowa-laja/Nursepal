@@ -5,7 +5,7 @@ import image from '../../Images/johnDoe.png';
 import '../../css/patientDetailPage.css';
 import { VitalsInput } from '../VitalsInput';
 import { PatientInput } from '../PatientInput';
-import { log_patient_viewing } from '../api';
+import { logPatientViewing } from '../api';
 
 export const PatientDetailPage = () => {
     const patient = useLocation().state;
@@ -16,12 +16,12 @@ export const PatientDetailPage = () => {
               const data = {
                 patientID: patient.patientID
               };
-              await log_patient_viewing(localStorage.getItem('nurseID'), data);
+              await logPatientViewing(localStorage.getItem('nurseID'), data);
           } catch (error) {
               console.error('Error creating log:', error);
           }
       };
-      createLog();
+      //createLog();
   }, [patient]);
 
     return (

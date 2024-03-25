@@ -83,6 +83,11 @@ def admit_patient(request, nurse_id):
                 nurse_id=nurse_id
             )
 
+        predefined_items = PredefinedChecklistItem.objects.filter(group="Fundamental Care")
+
+        for item in predefined_items:
+            CarePlanChecklistItem.objects.create(patient=patient, predefined_item=item)
+
         response_data = {
             'patient': serializer.data,
             'admissionReason': admission.admissionReason
@@ -90,6 +95,20 @@ def admit_patient(request, nurse_id):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def get_recent_admission(request, patient_id):
+    if request.method == 'GET':
+        patient = get_object_or_404(Patient, patientID=patient_id)
+
+        most_recent_admission = Admission.objects.filter(patient=patient).order_by('-admissionDateTime').first()
+
+        if most_recent_admission:
+            serializer = AdmissionSerializer(most_recent_admission)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "No recent admission found for this patient."}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['POST', 'GET'])

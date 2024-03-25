@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { AdmissionForm } from "../AdmissionForm";
+import { PatientsList } from "../PatientsList";
 import '../../css/patientPage.css'
 
 export const PatientsPage = () => {
@@ -47,41 +48,14 @@ export const PatientsPage = () => {
                 <div className="col-md-6">
                     <h3>Patients:</h3>
                     <div className="legend-item me-2">
-                        <div className="legend-square bg-success"></div>
+                        <div className="legend-square assignedPatientLegend"></div>
                         <span>Patients assigned to you</span>
                     </div>
                     <div className="legend-item">
-                        <div className="legend-square bg-secondary"></div>
+                        <div className="legend-square otherPatientLegend"></div>
                         <span>Other patients</span>
                     </div>
-                    {loading ? (
-                        <div className="d-flex align-items-center">
-                            <FontAwesomeIcon icon={faSpinner} spin size="lg" />
-                            <span className="ms-2">Loading...</span>
-                        </div>
-                    ): (
-                        <ul className="list-unstyled">
-                            {patients?.length > 0
-                                ? ( 
-                                    patients.map((patient) => (
-                                        <li key={patient.patientID}>
-                                            <Link to="/patient"
-                                                state={patient}>
-                                                <div className={`container-fluid rounded text-white border ${localStorage.getItem('nurseID') == patient.nurse ? 'bg-success' : 'bg-secondary'}`}>
-                                                    {patient.name}
-                                                </div>
-                                            </Link>
-                                        </li>
-                                    ))           
-                                ) : (
-                                    <li>
-                                        <div className="container-fluid rounded bg-success text-white border">
-                                            No patients found
-                                        </div>
-                                    </li>
-                            )}
-                        </ul>
-                    )}
+                    <PatientsList patients={patients} />
                 </div>
                 <div className="col-md-6 text-center">
                     <AdmissionForm handleAdmissionSuccess={handleAdmissionSuccess}/>

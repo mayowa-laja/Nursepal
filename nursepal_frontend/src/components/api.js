@@ -226,13 +226,24 @@ export const administerMedication = async (nurseID, data) => {
     }
 }
 
-export const log_patient_viewing = async (nurseID, data) => {
+export const logPatientViewing = async (nurseID, data) => {
     try{
         const response = await axios.post(`${baseURL}/log/${nurseID}`, data);
         return response.data;
     } 
     catch (error) {
         console.error('Error creating log of patient record viewing:', error);
+        throw error;
+    }
+}
+
+export const getRecentAdmission = async (patientID) => {
+    try{
+        const response = await axios.get(`${baseURL}/admission/${patientID}`);
+        return response.data;
+    } 
+    catch (error) {
+        console.error('Error getting most recent admission:', error);
         throw error;
     }
 }

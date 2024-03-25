@@ -8,6 +8,7 @@ urlpatterns = [
     path('api/patients', get_all_patients, name='get_all_patients'),
     path('api/patients/<int:nurse_id>', get_assigned_patients, name='get_assigned_patients'),
     path('api/admit/<int:nurse_id>', admit_patient, name='admit_patient'),
+    path('api/admission/<int:patient_id>', get_recent_admission, name='get_recent_admission'),
     path('api/checklist/<int:patient_id>', checklist, name='checklist'),
     path('api/vitals/<int:id_>', vitals, name="vitals"),
     path('api/nurse_input/<int:id_>', nurse_input, name="nurse_input"),

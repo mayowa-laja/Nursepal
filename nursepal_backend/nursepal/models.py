@@ -30,6 +30,11 @@ class Admission(models.Model):
     admissionDateTime = models.DateTimeField()
     dischargeDateTime = models.DateTimeField(null=True)
     nurse = models.ForeignKey(Nurse, on_delete=models.CASCADE)
+    maxTemperature = models.DecimalField(max_digits=5, decimal_places=2)
+    maxHeartRate = models.IntegerField()
+    maxRespiratoryRate = models.IntegerField()
+    maxSystolicBloodPressure = models.IntegerField()
+    maxDiastolicBloodPressure = models.IntegerField()
 
     class Meta:
         unique_together = ('patient', 'admissionDateTime')
@@ -135,4 +140,5 @@ class CarePlanChecklistItem(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     predefined_item = models.ForeignKey(PredefinedChecklistItem, on_delete=models.CASCADE, null=True)
     checked = models.BooleanField(default=False)
+
 

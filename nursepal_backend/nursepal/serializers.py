@@ -8,9 +8,21 @@ class NurseSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.ModelSerializer):
+    recent_admission = serializers.SerializerMethodField()
+
     class Meta:
         model = Patient
-        fields = '__all__'
+        fields = ['patientID', 'name', 'age', 'dateOfBirth', 'address', 'sex', 'bloodType', 'nurse', 'recent_admission']
+
+    def get_recent_admission(self, obj):
+        recent_admission = Admission.objects.filter(patient=obj).order_by('-admissionDateTime').first()
+        if recent_admission:
+            return {
+                'admissionDateTime': recent_admission.admissionDateTime,
+                'dischargeDateTime': recent_admission.dischargeDateTime
+            }
+        else:
+            return None
 
 
 class AdmissionSerializer(serializers.ModelSerializer):

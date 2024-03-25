@@ -48,7 +48,7 @@ export const PatientInput = ({ patient }) => {
     };
 
     return (
-        <div className="container">
+        <>
             <h3 className="mt-3">Record Symptom, Observation, or Care</h3>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -89,6 +89,6 @@ export const PatientInput = ({ patient }) => {
                 )}
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-        </div>
+        </>
     );
 };

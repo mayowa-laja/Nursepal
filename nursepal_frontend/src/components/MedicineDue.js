@@ -107,11 +107,11 @@ export const MedicineDue = ({ patients }) => {
             const timeRemaining = calculateTimeRemaining(medication, lastAdminTime);
             const overdue = timeRemaining < 0;
             return (
-                <li key={medication.medicationID} className="list-group-item">
+                <li key={medication.medicationID} className='list-group-item'>
                     <div>{medication.medication} - Dose: {medication.quantity} - {getPatientName(medication.patient)} (PatientID: {medication.patient})</div>
                     <div>
                         {overdue ? (
-                        <span>Overdue by: {formatTime(-timeRemaining)}</span>
+                        <span className="text-danger">Overdue by: {formatTime(-timeRemaining)}</span>
                         ) : (
                         <span>Next dose in: {formatTime(timeRemaining)}</span>
                         )}
@@ -147,23 +147,23 @@ export const MedicineDue = ({ patients }) => {
     };
 
     return (
-        <div className="container-fluid">
+        <>
             <h3 className="mt-3">Medication Schedule</h3>
             <ul className="list-group">
                 {displayMedications}
             </ul>
             <ReactPaginate
-                previousLabel='< Previous'
-                nextLabel='Next >'
+                previousLabel='&laquo;'
+                nextLabel='&raquo;'
                 breakLabel='...'
                 pageCount={pageCount}
                 //marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
-                containerClassName={'pagination'}
-                //activeClassName={'active'}
+                containerClassName={'pagination-box'}
+                activeClassName={'active'}
                 renderOnZeroPageCount={null}
             />
-        </div>
+        </>
     );
 };

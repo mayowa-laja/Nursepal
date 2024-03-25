@@ -1,0 +1,24 @@
+.patientListItem {
+    background-color: #4CAF50;
+}
+
+.patientListItem:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.otherPatientListItem {
+    background-color: #BDDEBD;
+}
+
+.care-checklist-item {
+    background-color: #9CCE9E;
+}
+
+.dropdown_button {
+    background-color: #774CAF;
+}
+
+.dropdown_button:hover {
+    background-color: #770fff;
+}

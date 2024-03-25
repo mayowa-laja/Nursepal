@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from "react"
 import { useLocation} from 'react-router-dom';
-import { VitalsCharts } from '../VitalCharts';
-import { BloodPressureChart} from '../BloodPressureChart';
-import { MedicineAdministrationChart } from '../MedicineAdministrationChart';
-import { getSymptoms, getObservations, getCare, getMedications } from '../api';
+import { VitalsCharts } from '../Charts/VitalCharts';
+import { BloodPressureChart} from '../Charts/BloodPressureChart';
+import { MedicineAdministrationChart } from '../Charts/MedicineAdministrationChart';
+import { getSymptoms, getObservations, getCare, getMedications, getRecentAdmission } from '../api';
 import { Symptoms } from '../Symptoms';
 import { Observations } from '../Observations';
 import { Care } from '../Care';
@@ -17,6 +17,7 @@ export const PatientHealthPage = () => {
     const [observations, setObservations] = useState([]);
     const [care, setCare] = useState([]);
     const [medications, setMedications] = useState([]);
+    const [recentAdmission, setRecentAdmission] = useState([]);
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('pastDay');
     const patient = useLocation().state;
@@ -33,13 +34,16 @@ export const PatientHealthPage = () => {
             getSymptoms(patient.patientID),
             getObservations(patient.patientID),
             getCare(patient.patientID),
-            getMedications(patient.patientID)
+            getMedications(patient.patientID),
+            getRecentAdmission(patient.patientID),
+
         ])
-        .then(([symptomsData, observationsData, careData, medicationsData]) => {
+        .then(([symptomsData, observationsData, careData, medicationsData, admissionData]) => {
             setSymptoms(symptomsData);
             setObservations(observationsData);
             setCare(careData);
             setMedications(medicationsData);
+            setRecentAdmission(admissionData);
             setLoading(false);
         })
         .catch(error => {
@@ -86,7 +90,7 @@ export const PatientHealthPage = () => {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col">
                             <div className="mb-3">
                                 <h3 className="mt-4">Charts</h3>
                                 <label htmlFor="timeRangeSelect" className="me-3">Select Time Range:</label>
